@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil de Usuario</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Archivo de estilos personalizados -->
+    <link href="css/perfil.css" rel="stylesheet">
+    <link href="css/vistad.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Barra lateral -->
+    <nav class="sidebar">
+        <h2 class="text-center">Perfil</h2>
+        <a href="#" class="active" data-section="datos">Datos Personales</a>
+        <a href="#" data-section="pedidos">Pedidos</a>
+        <a href="#" data-section="metdosdepago">Metdos De Pago</a>
+        <a href="#" data-section="direcciones">Direcciones</a>
+    </nav>
+
+    <!-- Contenido Principal -->
+    <div class="main-content">
+        <!-- Sección: Datos Personales -->
+        <div id="datos" class="section">
+            <h3 class="text-center">Datos Personales</h3>
+            <div class="card shadow-lg p-4">
+                <div class="d-flex align-items-center">
+                    <div class="me-4 text-center">
+                        <img src="https://via.placeholder.com/150" alt="Foto de perfil" id="foto-perfil" class="rounded-circle mb-3" style="width: 150px; height: 150px; object-fit: cover;">
+                        <input type="file" id="cambiar-foto" class="form-control form-control-sm d-none" accept="image/*">
+                        <button class="btn btn-outline-primary btn-sm" onclick="habilitarCambioFoto()">Cambiar Foto</button>
+                    </div>
+                    <div>
+                        <p><strong>Nombre:</strong> <span id="nombre-usuario">Juan Pérez</span></p>
+                        <p><strong>Email:</strong> <span id="email-usuario">juan.perez@example.com</span></p>
+                        <p><strong>Teléfono:</strong> <span id="telefono-usuario">+52 123 456 7890</span></p>
+                        <p><strong>Contraseña:</strong> <span id="contrasena-usuario">******</span></p>
+                        <button class="btn btn-outline-primary btn-sm" onclick="habilitarEdicionDatos()">Editar</button>
+                    </div>
+                </div>
+        
+                <!-- Sección de edición -->
+                <div id="editar-datos" class="d-none mt-4">
+                    <div class="mb-3">
+                        <label for="nuevo-nombre" class="form-label">Nombre</label>
+                        <input type="text" id="nuevo-nombre" class="form-control" value="Juan Pérez">
+                    </div>
+                    <div class="mb-3">
+                        <label for="nuevo-email" class="form-label">Email</label>
+                        <input type="email" id="nuevo-email" class="form-control" value="juan.perez@example.com">
+                    </div>
+                    <div class="mb-3">
+                        <label for="nuevo-telefono" class="form-label">Teléfono</label>
+                        <input type="text" id="nuevo-telefono" class="form-control" value="+52 123 456 7890">
+                    </div>
+                    <div class="mb-3">
+                        <label for="nueva-contrasena" class="form-label">Nueva Contraseña</label>
+                        <input type="password" id="nueva-contrasena" class="form-control" placeholder="Escribe una nueva contraseña">
+                    </div>
+                    <button class="btn btn-primary" onclick="guardarCambiosDatos()">Guardar Cambios</button>
+                    <button class="btn btn-secondary" onclick="cancelarEdicionDatos()">Cancelar</button>
+                </div>
+            </div>
+        </div>
+        
+        
+
+        <!-- Sección: Pedidos -->
+        <div id="pedidos" class="section d-none">
+            <h3>Tus Pedidos</h3>
+            <table class="table table-hover" id="tabla-pedidos">
+                <thead class="table-dark">
+                    <tr>
+                        <th>IdPedido</th>
+                        <th>Productos</th>
+                        <th>Precio</th>
+                        <th>Detalle</th>
+                        <th>Precio Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Dinámico -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Sección: Metodos de pagos -->
+        <div id="metdosdepago" class="section d-none">
+            <h3>Metodos De Pago</h3>
+            <ul>
+                    <table class="table table-hover" id="tabla-metdosdepago">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Nombre Del Titular</th>
+                                <th>Numero De Tarjeta</th>
+                                <th>Mes</th>
+                                <th>Año</th>
+                                <th>CVV</th>
+                                <th>Numero Telefonico</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Dinámico -->
+                        </tbody>
+                    </table>
+                </ul>
+        </div>
+
+        <!-- Sección:Direccion -->
+        <div id="direcciones" class="section d-none">
+            <h3>Direccion</h3>
+            <ul>
+            <div class="input-group mb-3">
+            <input type="text" class="form-control" id="nombredrcc" placeholder="Nombre Direccion" required>
+            <input type="text" class="form-control" id="calle" placeholder="Calle" required>
+            <input type="text" class="form-control" id="codpost" placeholder="Codigo Postal" required>
+            <input type="number" class="form-control" id="nm-ext" placeholder="Numero Exterior" required>
+            <input type="number" class="form-control" id="nm-int" placeholder="Numero Interior" required>
+            <input type="text" class="form-control" id="colonia" placeholder="Colonia" required>
+            <input type="text" class="form-control" id="pais" placeholder="Pais" required>
+            <input type="text" class="form-control" id="estado" placeholder="Estado" required>
+            <input type="text" class="form-control" id="ciudad" placeholder="Ciudad" required>
+            <input type="number" class="form-control" id="nm-tfl" placeholder="Numero Telefonico" required>
+        </div>
+        <button class="btn btn-primary" onclick="agregarDireccion()">Agregar Direccion</button>
+                <table class="table table-hover" id="tabla-direcciones">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Nombre Direccion</th>
+                            <th>Calle</th>
+                            <th>Codigo Postal</th>
+                            <th>Numero Exterior</th>
+                            <th>Numero Interior</th>
+                            <th>Colonia</th>
+                            <th>Pais</th>
+                            <th>Estado</th>
+                            <th>Ciudad</th>
+                            <th>Numero Telefonico</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Dinámico -->
+                    </tbody>
+                </table>
+            </ul>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/vistadmin.js"></script>
+
+    <!-- JavaScript -->
+  
+    <script src="js/perfil.js"></script> 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
