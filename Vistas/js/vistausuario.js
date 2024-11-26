@@ -185,3 +185,6 @@ function redirectToUserViewPerfil(event) {
     // Redirigir al usuario a la página "Perfil.html"
     window.location.href = "Perfil.html";  // Asegúrate de que "Perfil.html" esté en la ruta correcta
 }
+function redirectToUserViewINICIO() {
+    window.location.href = "login.html";
+}

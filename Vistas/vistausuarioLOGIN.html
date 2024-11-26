@@ -60,16 +60,15 @@
             
                 <!-- Botón del carrito -->
                 <form class="d-flex">
-                    <button class="btn btn-outline-dark" type="button" data-bs-toggle="modal"
-                        data-bs-target="#cartModal">
+                    <button class="btn btn-outline-dark" type="button" onclick="redirectToUserViewINICIO(event)">
                         <i class="bi-cart-fill me-1"></i>
                         Carrito
                         <span class="badge bg-dark text-white ms-1 rounded-pill" id="cartCount">0</span>
                     </button>
                 </form>
 
-                <a href="Perfil.html" id="miPerfil" class="ms-3 text-decoration-none text-dark" onclick="redirectToUserViewPerfil(event)">Perfil</a>
-                <button class="btn btn-danger btn-sm" style="margin-left: 20px;" onclick="redirectToUserViewINICIO()">Cerrar sesión</button>
+                <a href="login.html" id="miPerfil" class="ms-3 text-decoration-none text-dark" onclick="redirectToUserViewINICIO(event)">Iniciar sesión</a>
+
                 <!-- Modal del carrito -->
                 <div class="modal fade" id="cartModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
                     aria-labelledby="cartModalLabel" aria-hidden="true">
@@ -100,7 +99,7 @@
                                 <h5 class="me-auto">Total: <span id="totalPrice">$0.00</span></h5>
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                                 <!-- apertura del nuevo modal de pago-->
-                                <button type="button" class="btn btn-primary" onclick="openPaymentModal()">Proceder al
+                                <button type="button" class="btn btn-primary" onclick="redirectToUserViewINICIO()">Proceder al
                                     pago</button>
                             </div>
                         </div>
@@ -259,7 +258,7 @@
                         <!-- Product actions-->
                         <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                             <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#"
-                                    onclick="addToCart('VINIL', 10.00)">Añadir</a></div>
+                                    onclick="redirectToUserViewINICIO('VINIL', 10.00)">Añadir</a></div>
                         </div>
                     </div>
                 </div>
@@ -281,7 +280,7 @@
                         <!-- Product actions-->
                         <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                             <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#"
-                                    onclick="addToCart('VINIL2', 50.00)">Añadir</a></div>
+                                    onclick="redirectToUserViewINICIO('VINIL2', 50.00)">Añadir</a></div>
                         </div>
                     </div>
                 </div>
@@ -300,7 +299,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- JavaScript for handling cart functionality -->
-    <script src="js/vistausuario.js"></script> 
+    <script src="js/vistaULOGIN.js"></script> 
 </body>
 
 </html>
