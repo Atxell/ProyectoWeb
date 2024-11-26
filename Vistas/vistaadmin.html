@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>VINIMATH</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- Bootstrap icons-->
+    <title>VINMTAH AD</title>
+    <!-- Bootstrap CSS -->
+    <link href="css/vistad.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Panel Administrativo</a>
+        </div>
+    </nav>
+
+    <!-- Contenido Principal -->
+    <div class="container mt-5 pt-5">
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" data-bs-toggle="tab" href="#productos">Productos</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#categorias">Categorías</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#carrusel">Carrusel</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#pedidos">Pedidos</a>
+            </li>
+        </ul>
+
+        <div class="tab-content mt-3">
+            <div class="tab-pane fade show active" id="productos">
+                <h3>Productos</h3>
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" id="nombre-producto" placeholder="Nombre del Producto" required>
+            <input type="number" class="form-control" id="cantidad-producto" placeholder="Cantidad" required>
+            <input type="number" class="form-control" id="precio-producto" placeholder="Precio" required>
+            <input type="file" class="form-control" id="imagen-producto" accept="image/*">
+            <button class="btn btn-primary" onclick="agregarProducto()">Agregar Producto</button>
+        </div>
+        <input type="text" id="buscar-productos" class="form-control mb-3" placeholder="Buscar producto..." onkeyup="buscarEnTabla('tabla-productos', 'buscar-productos')">
+        <table class="table table-hover" id="tabla-productos">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Cantidad</th>
+                    <th>Precio</th>
+                    <th>Imagen</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Dinámico -->
+            </tbody>
+        </table>
+            </div>
+            <div class="tab-pane fade" id="categorias">
+                <h3>Categorías</h3>
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" id="nombre-categoria" placeholder="Nombre de la Categoría" required>
+            <textarea class="form-control" id="descripcion-categoria" placeholder="Descripción" rows="2"></textarea>
+            <button class="btn btn-primary" onclick="agregarCategoria()">Agregar Categoría</button>
+        </div>
+        <input type="text" id="buscar-categorias" class="form-control mb-3" placeholder="Buscar categorías..." onkeyup="buscarEnTabla('tabla-categorias', 'buscar-categorias')">
+        <table class="table table-hover" id="tabla-categorias">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Dinámico -->
+            </tbody>
+        </table>
+            </div>
+            <div class="tab-pane fade" id="carrusel">
+                <h3>Carrusel</h3>
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" id="titulo-carrusel" placeholder="Título" required>
+            <textarea class="form-control" id="descripcion-carrusel" placeholder="Descripción" rows="2"></textarea>
+            <input type="file" class="form-control" id="imagen-carrusel" accept="image/*">
+            <button class="btn btn-primary" onclick="agregarCarrusel()">Agregar al Carrusel</button>
+        </div>
+        <input type="text" id="buscar-carrusel" class="form-control mb-3" placeholder="Buscar carrusel..." onkeyup="buscarEnTabla('tabla-carrusel', 'buscar-carrusel')">
+        <table class="table table-hover" id="tabla-carrusel">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Título</th>
+                    <th>Descripción</th>
+                    <th>Imagen</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Dinámico -->
+            </tbody>
+        </table>
+            </div>
+        </div>
+        
+            <div class="tab-pane fade" id="pedidos">
+                <h3>Pedidos</h3>
+        <input type="text" id="buscar-pedidos" class="form-control mb-3" placeholder="Buscar pedido..." onkeyup="buscarEnTabla('tabla-pedidos', 'buscar-pedidos')">
+        <table class="table table-hover" id="tabla-pedidos">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID pedido</th>
+                    <th>ID producto</th>
+                    <th>ID Usuario</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Dinámico -->
+            </tbody>
+        </table>
+            </div>
+         <!-- Modales -->
+    <!-- Modal de Edición de Producto -->
+    <div class="modal fade" id="editarProductoModal" tabindex="-1" aria-labelledby="editarProductoModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editarProductoModalLabel">Editar Producto</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="edit-nombre-producto" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="edit-nombre-producto">
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-cantidad-producto" class="form-label">Cantidad</label>
+                        <input type="number" class="form-control" id="edit-cantidad-producto">
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-precio-producto" class="form-label">Precio</label>
+                        <input type="number" class="form-control" id="edit-precio-producto">
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-imagen-producto" class="form-label">Imagen</label>
+                        <input type="file" class="form-control" id="edit-imagen-producto">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" onclick="guardarEdicion()">Guardar Cambios</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Edición de Categoría -->
+    <div class="modal fade" id="editarCategoriaModal" tabindex="-1" aria-labelledby="editarCategoriaModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editarCategoriaModalLabel">Editar Categoría</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="edit-nombre-categoria" class="form-label">Nombre de la Categoría</label>
+                        <input type="text" class="form-control" id="edit-nombre-categoria">
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-descripcion-categoria" class="form-label">Descripción</label>
+                        <textarea class="form-control" id="edit-descripcion-categoria" rows="2"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" id="guardar-cambios-categoria" onclick="guardarEdicionCategoria()">Guardar cambios</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Edición del Carrusel -->
+    <div class="modal fade" id="editarCarruselModal" tabindex="-1" aria-labelledby="editarCarruselModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editarCarruselModalLabel">Editar Carrusel</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="edit-titulo-carrusel" class="form-label">Título</label>
+                        <input type="text" class="form-control" id="edit-titulo-carrusel">
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-descripcion-carrusel" class="form-label">Descripción</label>
+                        <textarea class="form-control" id="edit-descripcion-carrusel" rows="2"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-imagen-carrusel" class="form-label">Imagen</label>
+                        <input type="file" class="form-control" id="edit-imagen-carrusel">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" id="guardar-cambios-carrusel" onclick="guardarEdicionCarrusel()">Guardar cambios</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/vistadmin.js"></script>
+
+     <!-- Contenido Principal --> <!-- Contenido Principal --> <!-- Contenido Principal --> <!-- Contenido Principal --> <!-- Contenido Principal --> <!-- Contenido Principal --> <!-- Contenido Principal -->
+    
+</body>
+</html>
