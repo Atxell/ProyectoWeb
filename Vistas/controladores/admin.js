@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const pool = require('./db'); // Importar configuración de PostgreSQL
 
+
 // Productos
 router.post('/productos', async (req, res) => {
     const { nombre, cantidad, precio } = req.body;
