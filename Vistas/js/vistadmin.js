@@ -298,6 +298,10 @@ function limpiarCamposCarrusel() {
     document.getElementById("descripcion-carrusel").value = "";
     document.getElementById("imagen-carrusel").value = "";
 }
+function redirectToUserViewINICIO() {
+    window.location.href = "login.html";
+}
+
 =======
 let productos = [];
 let idProductoCounter = 1;
