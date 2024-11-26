@@ -4,7 +4,7 @@ const { Pool } = require('pg');
 const pool = new Pool({
   user: 'root',       // Your database username
   host: 'localhost',           // Database host (or remote host)
-  database: 'proyectoweb',   // Database name
+  database: 'vinmathBD',   // Database name
   password: '12345',   // Your password
   port: 5432,                  // Default PostgreSQL port
 });

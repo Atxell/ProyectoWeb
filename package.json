@@ -1,5 +1,15 @@
 {
   "dependencies": {
+    "express": "^4.21.1",
     "pg": "^8.13.1"
-  }
+  },
+  "name": "proyectoweb",
+  "version": "1.0.0",
+  "description": "PaginaWeb",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Atxell",
+  "license": "MIT"
 }

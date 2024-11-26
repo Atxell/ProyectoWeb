@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 body {
     display: flex;
@@ -50,3 +51,57 @@ body {
 .text-body-secondary {
     color: #666666 !important;
 }
+=======
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
+    background: linear-gradient(135deg, #1f1f1f, #3a3a3a);
+    color: #ffffff;
+}
+
+.form-signin {
+    max-width: 600px;
+    width: 90%;
+    padding: 30px;
+    background: #f5f5f5;
+    border-radius: 8px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    color: #333333;
+}
+
+.form-signin img {
+    margin-bottom: 20px;
+}
+
+.form-signin .form-floating {
+    margin-bottom: 15px;
+}
+
+.form-signin .form-control {
+    background: #ffffff;
+    border: 1px solid #cccccc;
+    color: #333333;
+}
+
+.form-signin .form-control::placeholder {
+    color: #888888;
+}
+
+.form-signin .form-control:focus {
+    background: #ffffff;
+    border: 1px solid #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.2);
+}
+
+.form-signin button {
+    font-weight: 600;
+}
+
+.text-body-secondary {
+    color: #666666 !important;
+}
+>>>>>>> b57f005c3f5d865b4e04c660082ed906d6b8aea4
