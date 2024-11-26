@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 /* Fondo metálico oscuro */
 body {
     display: flex;
@@ -65,74 +65,4 @@ body {
 
 /* Asegúrate de que el segundo botón de registro tenga un margen superior */
 .form-signin .mt-3 {
-    margin-top: 20px; /* Ajusta el espacio entre los botones */
-=======
-/* Fondo metálico oscuro */
-body {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    margin: 0;
-    background: linear-gradient(135deg, #1f1f1f, #212529);
-    color: #ffffff;
-}
-
-/* Contenedor de inicio de sesión */
-.form-signin {
-    max-width: 600px; /* Más ancho para ocupar una buena parte de la pantalla */
-    width: 90%; /* Para que se ajuste mejor en pantallas pequeñas */
-    padding: 30px; /* Mayor espacio interno */
-    background: #f5f5f5; /* Color claro que contrasta con el fondo */
-    border-radius: 8px;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Sombra para destacarlo */
-    color: #333333;
-}
-
-/* Espaciado inferior del logo */
-.form-signin img {
-    margin-bottom: 20px;
-}
-
-/* Espaciado entre campos */
-.form-signin .form-floating {
-    margin-bottom: 20px;
-}
-
-/* Campos de entrada */
-.form-signin .form-control {
-    background: #ffffff; /* Fondo blanco para los campos */
-    border: 1px solid #cccccc;
-    color: #333333;
-}
-
-/* Placeholder de los campos */
-.form-signin .form-control::placeholder {
-    color: #888888;
-}
-
-/* Foco en los campos */
-.form-signin .form-control:focus {
-    background: #ffffff;
-    border: 1px solid #007bff;
-    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
-}
-
-/* Botón de inicio de sesión */
-.form-signin button {
-    font-weight: 600;
-}
-
-/* Texto secundario */
-.text-body-secondary {
-    color: #666666 !important;
-}
-.form-signin form {
-    margin-bottom: 15px; /* Espaciado entre los formularios */
-}
-
-/* Asegúrate de que el segundo botón de registro tenga un margen superior */
-.form-signin .mt-3 {
-    margin-top: 20px; /* Ajusta el espacio entre los botones */
->>>>>>> b57f005c3f5d865b4e04c660082ed906d6b8aea4
-}
+    margin-top: 20px; }/* Ajusta el espacio entre los botones */
