@@ -14,6 +14,9 @@ const pool = new Pool({
 app.use(bodyParser.json());
 
 app.use(require("cors")());
+app.use(express.static(path.join(__dirname, 'Vistas')));
+app.use(express.static(path.join(__dirname, 'Vistas/js')));
+
 
 // Middleware para procesar JSON en el body de las solicitudes
 app.use(express.json());
@@ -34,10 +37,15 @@ app.post("/login", async (req, res) => {
 
   try {
     // Consulta al usuario por su correo
+
+    console.log("Datos recibidos del cliente:", { correoelectronico, contraseña });
+
     const userQuery = await pool.query(
       "SELECT * FROM usuarios WHERE correoelectronico = $1",
       [correoelectronico]
     );
+
+    console.log("Respuesta de la base de datos:", userQuery.rows);
 
     if (userQuery.rows.length === 0) {
       return res.status(401).json({ message: "Usuario no encontrado" });
@@ -46,6 +54,8 @@ app.post("/login", async (req, res) => {
     const user = userQuery.rows[0];
     // Comparar la contraseña con bcrypt
     const isPasswordValid = await bcrypt.compare(contraseña, user.contraseña);
+
+    console.log("¿Contraseña válida?:", isPasswordValid);
 
     if (!isPasswordValid) {
       return res.status(401).json({ message: "Contraseña incorrecta" });

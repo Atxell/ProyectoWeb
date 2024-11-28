@@ -3,7 +3,9 @@
 async function redirectToUserViewSesion() {
     const correoelectronico = document.getElementById("floatingInput").value;
     const contraseña = document.getElementById("floatingPassword").value;
-  
+
+    console.log("Datos enviados al servidor:", { correoelectronico, contraseña });
+
     const response = await fetch("http://localhost:3000/login", {
       method: "POST",
       headers: {
