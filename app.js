@@ -1,36 +1,73 @@
-// app.js
-const pool = require('./database'); // Import the pool from database.js
-const express = require('express');
-const bodyParser = require('body-parser');
-const fileUpload = require('express-fileupload'); // Si usas carga de archivos
-const rutas = require('./rutas'); // Archivo donde está tu código de rutas
-
+const express = require("express");
+const bodyParser = require("body-parser");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const { Pool } = require("pg");
+require("dotenv").config();
+const path = require("path");
 const app = express();
-const PORT = 3000; // Cambia si necesitas otro puerto
 
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+});
 
-// Example query function
-async function fetchUsers() {
-  try {
-    const res = await pool.query('SELECT * FROM users');
-    console.log(res.rows);  // Log the rows of data
-  } catch (err) {
-    console.error('Error executing query', err.stack);
-  }
-}
-
-// Middlewares
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(fileUpload());
 
-app.use('/api', rutas);
+app.use(require("cors")());
+
+// Middleware para procesar JSON en el body de las solicitudes
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+//Mostrar algo con solo el puerto xd
+app.get("/", (req, res) => {
+  res.send("Bienvenido al servidor de VINIMATH");
+});
+
+app.get("/login", (req, res) => {
+  res.sendFile(path.join(__dirname, "vistas", "login.html"));
+});
+
+// Ruta de login
+app.post("/login", async (req, res) => {
+  const { correoelectronico, contraseña } = req.body;
+
+  try {
+    // Consulta al usuario por su correo
+    const userQuery = await pool.query(
+      "SELECT * FROM usuarios WHERE correoelectronico = $1",
+      [correoelectronico]
+    );
+
+    if (userQuery.rows.length === 0) {
+      return res.status(401).json({ message: "Usuario no encontrado" });
+    }
+
+    const user = userQuery.rows[0];
+    // Comparar la contraseña con bcrypt
+    const isPasswordValid = await bcrypt.compare(contraseña, user.contraseña);
+
+    if (!isPasswordValid) {
+      return res.status(401).json({ message: "Contraseña incorrecta" });
+    }
+
+    // Generar el token JWT
+    const token = jwt.sign(
+      { id: user.idusuario, rol: user.rol }, // Puedes incluir más datos en el token
+      process.env.JWT_SECRET,
+      { expiresIn: "1h" }
+    );
+
+    res.json({ token, nombre: user.nombre, rol: user.rol });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error en el servidor" });
+  }
+});
+
 
 // Inicia el servidor
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log(`Servidor corriendo en http://localhost:${PORT}`);
+  console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
-// Call the function
-fetchUsers()
-    .then(() => console.log('Prueba de conexión a la base de datos exitosa'))
-    .catch(err => console.error('Error en la conexión inicial a la base de datos:', err));

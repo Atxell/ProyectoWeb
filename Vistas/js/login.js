@@ -1,19 +1,31 @@
-<<<<<<< HEAD
 
-    function redirectToUserViewSesion() {
-        window.location.href = "vistausuario.html";
+
+async function redirectToUserViewSesion() {
+    const correoelectronico = document.getElementById("floatingInput").value;
+    const contraseña = document.getElementById("floatingPassword").value;
+  
+    const response = await fetch("http://localhost:3000/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ correoelectronico, contraseña }),
+    });
+  
+    if (response.ok) {
+      const data = await response.json();
+      localStorage.setItem("token", data.token); // Guarda el token en el almacenamiento local
+      alert(`Bienvenido, ${data.nombre}`);
+      // Redirigir al dashboard o vista principal
+      window.location.href = "/home.html";
+    } else {
+      const error = await response.json();
+      alert(error.message);
     }
+  }
+  
 
     function redirectToUserViewRegitros() {
         window.location.href = "registro.html";
     }
-=======
 
-    function redirectToUserViewSesion() {
-        window.location.href = "vistausuario.html";
-    }
-
-    function redirectToUserViewRegitros() {
-        window.location.href = "registro.html";
-    }
->>>>>>> b57f005c3f5d865b4e04c660082ed906d6b8aea4
