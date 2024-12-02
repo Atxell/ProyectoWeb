@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const fileUpload = require('express-fileupload'); // Si usas carga de archivos
 const rutas = require('./rutas'); // Archivo donde está tu código de rutas
 
+
 const app = express();
 const PORT = 3000; // Cambia si necesitas otro puerto
 
@@ -24,7 +25,17 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(fileUpload());
 
+
 app.use('/api', rutas);
+
+
+app._router.stack.forEach(function(r){
+  if (r.route && r.route.path){
+      console.log(r.route.path);
+  } 
+});
+
+
 
 // Inicia el servidor
 app.listen(PORT, () => {
@@ -34,3 +45,7 @@ app.listen(PORT, () => {
 fetchUsers()
     .then(() => console.log('Prueba de conexión a la base de datos exitosa'))
     .catch(err => console.error('Error en la conexión inicial a la base de datos:', err));
+
+   
+   
+  
