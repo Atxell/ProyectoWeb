@@ -3,7 +3,7 @@ async function redirectToUserViewINICIO() {
         username: document.querySelector('input[placeholder="Nombre de usuario"]').value,
         nombres: document.querySelector('input[placeholder="Nombre(s)"]').value,
         apellidos: document.querySelector('input[placeholder="Apellidos"]').value,
-        email: document.querySelector('input[placeholder="Correo electronico"]').value + "@ejemplo.com",
+        email: document.querySelector('input[placeholder="Correo electronico"]').value + "@gmail.com",
         password: document.querySelector('input[placeholder="Contraseña"]').value,
         confirmPassword: document.querySelector('input[placeholder="Confirmar contraseña"]').value,
         direccion: {
@@ -24,10 +24,13 @@ async function redirectToUserViewINICIO() {
     });
 
     if (response.ok) {
-        alert("Registro exitoso");
-        window.location.href = "login.html"; // Redirige al login
+      const data = await response.json();
+      localStorage.setItem("token", data.token); // Guarda el token en el almacenamiento local
+      alert(`Bienvenido, ${data.nombre}`);
+      // Redirigir al dashboard o vista principal
+      window.location.href = "/home.html";
     } else {
-        const error = await response.json();
-        alert("Error: " + error.message);
+      const error = await response.json();
+      alert(error.message);
     }
-}
+  }
