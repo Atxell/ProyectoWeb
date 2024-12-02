@@ -28,7 +28,7 @@ async function redirectToUserViewINICIO() {
       localStorage.setItem("token", data.token); // Guarda el token en el almacenamiento local
       alert(`Bienvenido, ${data.nombre}`);
       // Redirigir al dashboard o vista principal
-      window.location.href = "/home.html";
+      window.location.href = "registro.html";
     } else {
       const error = await response.json();
       alert(error.message);
