@@ -27,7 +27,7 @@ app.use(express.urlencoded({ extended: true }));
 
 //Mostrar algo con solo el puerto xd
 app.get("/", (req, res) => {
-  res.send("Bienvenido al servidor de VINIMATH");
+  res.sendFile(path.join(__dirname, "vistas", "vistausuarioLOGIN.html"));
 });
 
 app.get("/login", (req, res) => {
@@ -73,6 +73,7 @@ app.post("/login", async (req, res) => {
     res.status(500).json({ message: "Error en el servidor" });
   }
 });
+
 
 
 // Inicia el servidor
