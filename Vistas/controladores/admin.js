@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const pool = require('./db'); // Importar configuración de PostgreSQL
+const pool = require('./database/database.js'); // Importar configuración de PostgreSQL
 
 
 // Productos

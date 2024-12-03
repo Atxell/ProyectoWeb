@@ -3,7 +3,7 @@ const { Pool } = require('pg');
 // Create a pool for database connections
 const pool = new Pool({
   user: 'root',       // Your database username
-  host: 'localhost',           // Database host (or remote host)
+  host: 'administrador',           // Database host (or remote host)
   database: 'vinmathBD',   // Database name
   password: '12345',   // Your password
   port: 5432,                  // Default PostgreSQL port
