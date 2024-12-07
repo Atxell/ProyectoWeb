@@ -1,153 +1,87 @@
-let direcciones = [];
-let idDireccionCounter = 1;
-        // Navegación dinámica entre secciones
-        document.querySelectorAll(".sidebar a").forEach(link => {
-            link.addEventListener("click", function(event) {
-                event.preventDefault();
+// Elementos de la página
+const btnEditar = document.querySelector("button[onclick='habilitarEdicionDatos()']");
+const seccionEdicion = document.getElementById("editar-datos");
+const btnGuardar = document.querySelector("button[onclick='guardarCambiosDatos()']");
+const btnCancelar = document.querySelector("button[onclick='cancelarEdicionDatos()']");
 
-                // Eliminar clase activa de todos los enlaces
-                document.querySelectorAll(".sidebar a").forEach(link => link.classList.remove("active"));
+// Elementos de visualización
+const nombreUsuario = document.getElementById("nombre-usuario");
+const emailUsuario = document.getElementById("email-usuario");
+const telefonoUsuario = document.getElementById("telefono-usuario");
+const contrasenaUsuario = document.getElementById("contrasena-usuario");
 
-                // Agregar clase activa al enlace actual
-                this.classList.add("active");
+// Elementos de edición
+const inputNombre = document.getElementById("nuevo-nombre");
+const inputEmail = document.getElementById("nuevo-email");
+const inputTelefono = document.getElementById("nuevo-telefono");
+const inputContrasena = document.getElementById("nueva-contrasena");
 
-                // Ocultar todas las secciones
-                document.querySelectorAll(".section").forEach(section => section.classList.add("d-none"));
-
-                // Mostrar la sección seleccionada
-                const sectionId = this.getAttribute("data-section");
-                document.getElementById(sectionId).classList.remove("d-none");
-            });
-        });
-
-        function agregarDireccion() {
-    const nombre = document.getElementById("nombredrcc").value;
-    const calle = document.getElementById("calle").value;
-    const codigoPostal = document.getElementById("codpost").value;
-    const numeroExterior = document.getElementById("nm-ext").value;
-    const numeroInterior = document.getElementById("nm-int").value;
-    const colonia = document.getElementById("colonia").value;
-    const pais = document.getElementById("pais").value;
-    const estado = document.getElementById("estado").value;
-    const ciudad = document.getElementById("ciudad").value;
-    const numeroTelefonico = document.getElementById("nm-tfl").value;
-
-    if (nombre && calle && codigoPostal && numeroExterior && colonia && pais && estado && ciudad && numeroTelefonico) {
-        direcciones.push({
-            id: idDireccionCounter++,
-            nombre,
-            calle,
-            codigoPostal,
-            numeroExterior,
-            numeroInterior: numeroInterior || "N/A",
-            colonia,
-            pais,
-            estado,
-            ciudad,
-            numeroTelefonico
-        });
-
-        mostrarDirecciones();
-        limpiarCamposDireccion();
-    } else {
-        alert("Por favor completa todos los campos obligatorios.");
-    }
-}
-
-function mostrarDirecciones() {
-    const tbody = document.getElementById("tabla-direcciones").querySelector("tbody");
-    tbody.innerHTML = "";
-
-    direcciones.forEach(dir => {
-        const fila = document.createElement("tr");
-        fila.innerHTML = `
-            <td>${dir.nombre}</td>
-            <td>${dir.calle}</td>
-            <td>${dir.codigoPostal}</td>
-            <td>${dir.numeroExterior}</td>
-            <td>${dir.numeroInterior}</td>
-            <td>${dir.colonia}</td>
-            <td>${dir.pais}</td>
-            <td>${dir.estado}</td>
-            <td>${dir.ciudad}</td>
-            <td>${dir.numeroTelefonico}</td>
-            <td>
-                <button class="btn btn-danger btn-sm" onclick="eliminarDireccion(${dir.id})">Eliminar</button>
-            </td>
-        `;
-        tbody.appendChild(fila);
-    });
-}
-function eliminarDireccion(id) {
-    direcciones = direcciones.filter(dir => dir.id !== id);
-    mostrarDirecciones();
-}
-
-function limpiarCamposDireccion() {
-    document.getElementById("nombredrcc").value = "";
-    document.getElementById("calle").value = "";
-    document.getElementById("codpost").value = "";
-    document.getElementById("nm-ext").value = "";
-    document.getElementById("nm-int").value = "";
-    document.getElementById("colonia").value = "";
-    document.getElementById("pais").value = "";
-    document.getElementById("estado").value = "";
-    document.getElementById("ciudad").value = "";
-    document.getElementById("nm-tfl").value = "";
-}
-
-// Habilitar edición de datos personales
+// Función para habilitar la edición de los datos
 function habilitarEdicionDatos() {
-    document.getElementById("editar-datos").classList.remove("d-none");
+    seccionEdicion.classList.remove("d-none");
+    btnEditar.style.display = "none";
+
+    // Rellenar los campos de edición con los datos actuales
+    inputNombre.value = nombreUsuario.textContent.trim();
+    inputEmail.value = emailUsuario.textContent.trim();
+    inputTelefono.value = telefonoUsuario.textContent.trim();
+    inputContrasena.value = ""; // No rellenar la contraseña por seguridad
 }
 
-// Cancelar edición
-function cancelarEdicionDatos() {
-    document.getElementById("editar-datos").classList.add("d-none");
-}
+// Función para guardar los cambios
+async function guardarCambiosDatos() {
+    // Obtener los valores editados
+    const nuevosDatos = {
+        nombre: inputNombre.value.trim(),
+        correoelectronico: inputEmail.value.trim(),
+        numerotelefono: inputTelefono.value.trim(),
+        contrasena: inputContrasena.value.trim()
+    };
 
-// Guardar cambios en los datos personales
-function guardarCambiosDatos() {
-    const nuevoNombre = document.getElementById("nuevo-nombre").value;
-    const nuevoEmail = document.getElementById("nuevo-email").value;
-    const nuevoTelefono = document.getElementById("nuevo-telefono").value;
-    const nuevaContrasena = document.getElementById("nueva-contrasena").value;
+    // Validar que los campos no estén vacíos
+    if (!nuevosDatos.nombre || !nuevosDatos.correoelectronico || !nuevosDatos.numerotelefono || !nuevosDatos.contrasena) {
+        alert("Todos los campos son obligatorios.");
+        return;
+    }
 
-    if (nuevoNombre && nuevoEmail && nuevoTelefono) {
-        document.getElementById("nombre-usuario").textContent = nuevoNombre;
-        document.getElementById("email-usuario").textContent = nuevoEmail;
-        document.getElementById("telefono-usuario").textContent = nuevoTelefono;
+    try {
+        // Enviar datos al backend
+        const response = await fetch("http://localhost:3000/perfil/editar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(nuevosDatos)
+        });
 
-        if (nuevaContrasena) {
-            document.getElementById("contrasena-usuario").textContent = "******";
+        if (!response.ok) {
+            throw new Error("Error al guardar los cambios");
         }
 
-        alert("Datos personales actualizados correctamente.");
-        cancelarEdicionDatos();
-    } else {
-        alert("Por favor, completa todos los campos.");
+        const resultado = await response.json();
+        if (resultado.exito) {
+            // Actualizar la vista con los nuevos datos
+            nombreUsuario.textContent = nuevosDatos.nombre;
+            emailUsuario.textContent = nuevosDatos.correoelectronico;
+            telefonoUsuario.textContent = nuevosDatos.numerotelefono;
+            contrasenaUsuario.textContent = "******"; // Enmascarar contraseña
+            cancelarEdicionDatos();
+            alert("Datos actualizados con éxito");
+        } else {
+            alert(`No se pudo actualizar los datos: ${resultado.mensaje}`);
+        }
+    } catch (error) {
+        console.error(error);
+        alert("Ocurrió un error al guardar los datos.");
     }
 }
 
-
-// Habilitar cambio de foto
-function habilitarCambioFoto() {
-    const cambiarFoto = document.getElementById("cambiar-foto");
-    cambiarFoto.click();
-
-    cambiarFoto.addEventListener("change", function () {
-        const archivo = cambiarFoto.files[0];
-        if (archivo) {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                document.getElementById("foto-perfil").src = e.target.result;
-            };
-            reader.readAsDataURL(archivo);
-        }
-    });
+// Función para cancelar la edición
+function cancelarEdicionDatos() {
+    seccionEdicion.classList.add("d-none");
+    btnEditar.style.display = "inline-block";
 }
-function redirectToUserViewINICIO() {
-    window.location.href = "login.html";
-}
+
+
 
     

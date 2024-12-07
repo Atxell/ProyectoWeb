@@ -6,6 +6,8 @@ const { Pool } = require("pg");
 require("dotenv").config();
 const path = require("path");
 const app = express();
+// Servir archivos estáticos desde la carpeta "public"
+app.use(express.static(path.join(__dirname, 'ProyectoWeb')));
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
@@ -73,6 +75,32 @@ app.post("/login", async (req, res) => {
     res.status(500).json({ message: "Error en el servidor" });
   }
 });
+
+
+app.post("/perfil/editar", async (req, res) => {
+  const { nombre, correoelectronico, numerotelefono, contrasena } = req.body;
+
+  // Validar datos
+  if (!nombre || !correoelectronico || !numerotelefono || !contrasena) {
+      return res.status(400).json({ exito: false, mensaje: "Todos los campos son obligatorios." });
+  }
+
+  try {
+      // Actualizar en la base de datos
+      const query = `
+          UPDATE usuarios
+          SET nombre = $1, correoelectronico = $2, numerotelefono = $3, "contraseña" = $4
+          WHERE idusuario = $2
+      `;
+      await pool.query(query, [nombre, correoelectronico, numerotelefono, contrasena]);
+
+      res.json({ exito: true, mensaje: "Datos actualizados correctamente." });
+  } catch (error) {
+      console.error("Error al actualizar datos:", error);
+      res.status(500).json({ exito: false, mensaje: "Error al actualizar los datos." });
+  }
+});
+
 
 
 
