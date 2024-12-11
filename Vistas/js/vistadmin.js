@@ -295,6 +295,8 @@ function agregarCarrusel() {
     const titulo = document.getElementById("titulo-carrusel").value;
     const descripcion = document.getElementById("descripcion-carrusel").value;
     const imagen = document.getElementById("imagen-carrusel").files[0];
+    const seleccionar = document.getElementById("seleccionar-carrusel").value;
+
 
     if (titulo && descripcion && imagen) {
         const reader = new FileReader();
@@ -304,6 +306,8 @@ function agregarCarrusel() {
                 titulo,
                 descripcion,
                 imagen: e.target.result,
+                seleccionar,
+
             });
             mostrarCarrusel();
             limpiarCamposCarrusel();
@@ -324,6 +328,8 @@ function mostrarCarrusel() {
             <td>${item.id}</td>
             <td>${item.titulo}</td>
             <td>${item.descripcion}</td>
+            <td>${item.seleccionar}</td>
+
             <td><button class="btn btn-sm btn-info" onclick="verImagen('${item.imagen}')">Ver Imagen</button></td>
             <td><button class="btn btn-sm btn-warning" onclick="editarCarrusel(${item.id})">Modificar</button></td>
             <td><button class="btn btn-sm btn-danger" onclick="eliminarCarrusel(${item.id})">Eliminar</button></td>
@@ -338,6 +344,8 @@ function editarCarrusel(id) {
 
     document.getElementById("edit-titulo-carrusel").value = item.titulo;
     document.getElementById("edit-descripcion-carrusel").value = item.descripcion;
+    document.getElementById("edit-numero-carrusel").value = item.seleccionar;
+
     document.getElementById("guardar-cambios-carrusel").setAttribute("data-id", id);
 
     const modal = new bootstrap.Modal(document.getElementById('editarCarruselModal'));
@@ -356,6 +364,7 @@ function guardarEdicionCarrusel() {
 
     item.titulo = document.getElementById("edit-titulo-carrusel").value;
     item.descripcion = document.getElementById("edit-descripcion-carrusel").value;
+    item.seleccionar = document.getElementById("edit-numero-carrusel").value;
 
     const imagen = document.getElementById("edit-imagen-carrusel").files[0];
     if (imagen) {
@@ -378,6 +387,8 @@ function limpiarCamposCarrusel() {
     document.getElementById("titulo-carrusel").value = "";
     document.getElementById("descripcion-carrusel").value = "";
     document.getElementById("imagen-carrusel").value = "";
+    document.getElementById("seleccionar-carrusel").value = "";
+
 }
 function redirectToUserViewINICIO() {
     window.location.href = "login.html";

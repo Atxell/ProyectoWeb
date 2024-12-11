@@ -94,6 +94,12 @@
         <div class="input-group mb-3">
             <input type="text" class="form-control" id="titulo-carrusel" placeholder="Título" required>
             <textarea class="form-control" id="descripcion-carrusel" placeholder="Descripción" rows="2"></textarea>
+            <select class="form-control" id="seleccionar-carrusel" >
+                <option value="" disabled selected>Numero de imagen</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+            </select>
             <input type="file" class="form-control" id="imagen-carrusel" accept="image/*">
             <button class="btn btn-primary" onclick="agregarCarrusel()">Agregar al Carrusel</button>
         </div>
@@ -207,6 +213,15 @@
                     <div class="mb-3">
                         <label for="edit-descripcion-carrusel" class="form-label">Descripción</label>
                         <textarea class="form-control" id="edit-descripcion-carrusel" rows="2"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-numero-carrusel" class="form-label">Número de Imagen</label>
+                        <select id="edit-numero-carrusel" class="form-control">
+                            <option value="" disabled selected>Numero de imagen</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                        </select>
                     </div>
                     <div class="mb-3">
                         <label for="edit-imagen-carrusel" class="form-label">Imagen</label>
