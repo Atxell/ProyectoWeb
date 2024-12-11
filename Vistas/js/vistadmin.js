@@ -6,30 +6,112 @@ let idCategoriaCounter = 1;
 let idCarruselCounter = 1;
 
 // Función para agregar productos
-function agregarProducto() {
+async function agregarProducto() {
     const nombre = document.getElementById("nombre-producto").value;
     const cantidad = document.getElementById("cantidad-producto").value;
     const precio = document.getElementById("precio-producto").value;
-    const imagen = document.getElementById("imagen-producto").files[0];
-
-    if (nombre && cantidad && precio && imagen) {
+    const idcategoria = document.getElementById("categoria-producto").value;
+    
+    const response = await fetch("http://localhost:3000/insertar/producto", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ nombre, cantidad, precio, idcategoria }),
+      });
+      
         const reader = new FileReader();
-        reader.onload = function (e) {
-            productos.push({
-                id: idProductoCounter++,
-                nombre,
-                cantidad,
-                precio,
-                imagen: e.target.result, // Convertimos la imagen a base64
-            });
-            mostrarProductos();
-            limpiarCampos(); // Limpiar los campos después de agregar
-        };
-        reader.readAsDataURL(imagen); // Leer la imagen como URL
-    } else {
-        alert("Completa todos los campos.");
-    }
+        productos.push({
+            id: idProductoCounter++,
+            nombre,
+            cantidad,
+            precio,
+            idcategoria
+        });
+        console.log(JSON.stringify(productos));
+        mostrarProductos();
+        limpiarCampos(); // Limpiar los campos después de agregar
 }
+
+
+
+
+// Función para agregar categorias
+async function agregarCategoriaNueva() {
+    const nombre = document.getElementById("nombre-categoria").value;
+    const descripcion = document.getElementById("descripcion-categoria").value;
+    
+    const response = await fetch("http://localhost:3000/insertar/categoria", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ nombre, descripcion }),
+      });
+      
+        const reader = new FileReader();
+        categorias.push({
+            id: idCategoriaCounter++,
+            nombre,
+            descripcion
+        });
+        console.log(JSON.stringify(categorias));
+        mostrarCategorias();
+        limpiarCampos(); // Limpiar los campos después de agregar
+}
+
+
+//llenar categoria de producto
+async function llenarCategoria(){
+    try {
+      const response = await fetch("http://localhost:3000/categoria/llenar");
+      const opciones = await response.json();
+  
+      const dropdown = document.getElementById('categoria-producto');
+      opciones.forEach(opcion => {
+        const optionElement = document.createElement('option');
+        optionElement.value = opcion.idcategoria;  // Valor del ID
+        optionElement.textContent = opcion.categoria; // Texto visible
+        dropdown.appendChild(optionElement);
+      });
+    } catch (error) {
+      console.error('Error al llenar el dropdown:', error);
+    }
+  }
+
+
+
+
+  //llenar tabla de producto
+async function llenarTablaProducto(){
+    try {
+      const response = await fetch("http://localhost:3000/producto/llenar");
+      const Rproductos = await response.json();
+      console.log(JSON.stringify(Rproductos));
+  
+      Rproductos.forEach(prod => {
+        const nombre=prod.nombredelproducto;
+        const cantidad=prod.cantidad;
+        const precio=prod.precio;
+        const idcategoria=prod.idcategoria;
+        productos.push({
+            id: idProductoCounter++,
+            nombre,
+            cantidad,
+            precio,
+            idcategoria
+        });
+      });
+      mostrarProductos();
+      console.log(JSON.stringify(productos));
+    } catch (error) {
+      console.error('Error al llenar el dropdown:', error);
+    }
+  }
+  
+
+
+
 
 // Función para mostrar productos en la tabla
 function mostrarProductos() {
@@ -43,7 +125,7 @@ function mostrarProductos() {
             <td>${prod.nombre}</td>
             <td>${prod.cantidad}</td>
             <td>${prod.precio}</td>
-            <td><button class="btn btn-info btn-sm" onclick="verImagen('${prod.imagen}')">Ver Imagen</button></td>
+            <td>${prod.idcategoria}</td>
             <td>
                 <button class="btn btn-warning btn-sm" onclick="editarProducto(${prod.id})">Modificar</button>
                 <button class="btn btn-danger btn-sm" onclick="eliminarProducto(${prod.id})">Eliminar</button>
@@ -112,7 +194,7 @@ function limpiarCampos() {
     document.getElementById("nombre-producto").value = "";
     document.getElementById("cantidad-producto").value = "";
     document.getElementById("precio-producto").value = "";
-    document.getElementById("imagen-producto").value = "";
+    document.getElementById("categoria-producto").value = "";
 }
 
 // Función para buscar en la tabla

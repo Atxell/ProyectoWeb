@@ -19,7 +19,12 @@ async function redirectToUserViewSesion() {
       localStorage.setItem("token", data.token); // Guarda el token en el almacenamiento local
       alert(`Bienvenido, ${data.nombre}`);
       // Redirigir al dashboard o vista principal
-      window.location.href = "./vistausuario.html";
+      if(response.rol="admin"){
+        window.location.href = "./vistaadmin.html";
+      }
+      else{
+        window.location.href = "./vistausuario.html";
+      }
     } else {
       const error = await response.json();
       alert(error.message);
@@ -31,4 +36,36 @@ async function redirectToUserViewSesion() {
     function redirectToUserViewRegitros() {
         
     }
+
+
+    /*
+async function llenarCategoria(){
+
+  const response = await fetch("http://localhost:3000/categoria/llenar", {
+    method: "get",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({}),
+  });
+  const options = await response.json();
+  alert(options.stringify);
+
+  // Get the dropdown element
+  const dropdown = document.getElementById('categoria-producto');
+        
+  // Clear existing options
+  dropdown.innerHTML = '';
+
+  options.forEach(option => {
+      const opt = document.createElement('option');
+      opt.value = option.categoria; // Value for submission
+      opt.innerHTML = option.categoria; // Display text
+      dropdown.appendChild(opt); // Append to dropdown
+  });
+
+}
+  */
+
+
 
