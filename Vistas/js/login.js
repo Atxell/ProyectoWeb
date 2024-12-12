@@ -19,7 +19,7 @@ async function redirectToUserViewSesion() {
       localStorage.setItem("token", data.token); // Guarda el token en el almacenamiento local
       alert(`Bienvenido, ${data.nombre}`);
       // Redirigir al dashboard o vista principal
-      if(response.rol=="admin"){
+      if(data.rol=="admin"){
         window.location.href = "./vistaadmin.html";
       }
       else{

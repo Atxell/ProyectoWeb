@@ -8,9 +8,7 @@
 let productos = [];
 let idProductoCounter = 1;
 let categorias = [];
-let carrusel = [];
 let idCategoriaCounter = 1;
-let idCarruselCounter = 1;
 
 // Función para agregar productos al carrito
 function addToCart(productName, productPrice) {
