@@ -246,7 +246,7 @@ function llenarProductos() {
                         </div>
                         <!-- Product actions-->
                         <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="login.html"
+                            <div class="text-center"><a class="btn btn-outline-dark mt-auto"
                                     onclick="addToCart('${prod.nombre}', ${prod.precio})">Añadir</a></div>
                         </div>
                     </div>
