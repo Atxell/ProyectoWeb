@@ -191,11 +191,6 @@ function redirectToUserViewPerfil(event) {
 function redirectToUserViewINICIO() {
     window.location.href = "login.html";
 }
-
-
-
-
-
   //traer productos
   async function traerProductos(){
     try {
