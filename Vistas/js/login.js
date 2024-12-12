@@ -38,34 +38,3 @@ async function redirectToUserViewSesion() {
     }
 
 
-    /*
-async function llenarCategoria(){
-
-  const response = await fetch("http://localhost:3000/categoria/llenar", {
-    method: "get",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({}),
-  });
-  const options = await response.json();
-  alert(options.stringify);
-
-  // Get the dropdown element
-  const dropdown = document.getElementById('categoria-producto');
-        
-  // Clear existing options
-  dropdown.innerHTML = '';
-
-  options.forEach(option => {
-      const opt = document.createElement('option');
-      opt.value = option.categoria; // Value for submission
-      opt.innerHTML = option.categoria; // Display text
-      dropdown.appendChild(opt); // Append to dropdown
-  });
-
-}
-  */
-
-
-
